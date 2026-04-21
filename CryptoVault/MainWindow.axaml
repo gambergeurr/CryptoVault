@@ -12,13 +12,32 @@
                         </Style>
                 </TabControl.Styles>
                 <TabItem Header="Analyse de mot de passe">
-                        <Grid ShowGridLines="True" RowDefinitions="*, 2*" ColumnDefinitions="*, *">
-                                <TextBox Grid.ColumnSpan="2" Height="15" Margin="150, 0" PlaceholderText="Entrez votre mot de passe"/>
+                        <Grid RowDefinitions="*, 2*" ColumnDefinitions="*, *">
+                                <TextBox Name="tbxPasswordAnalyzer" Grid.ColumnSpan="2" Height="15" Margin="150, 0" PlaceholderText="Entrez votre mot de passe" TextChanged="AnalyzePassword"/>
                                 
-                                <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,200,0">
-                                        <TextBlock Text="test"/>
-                                        <TextBlock Text="test"/>
-                                        <TextBlock Text="test"/>
+                                <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,200,0">
+                                        <StackPanel.Styles>
+                                                <Style Selector="TextBlock">
+                                                        <Setter Property="FontSize" Value="16"/>
+                                                </Style>
+                                        </StackPanel.Styles>
+                                        
+                                        <TextBlock Text="☒" Name="tbkCaps"/>
+                                        <TextBlock Text="☑" Name="tbkLower"/>
+                                        <TextBlock Text="test" Name="tbkLenght"/>
+                                        <TextBlock Text="test" Name="tbkNumbers"/>
+                                        <TextBlock Text="test" Name="tbkSpecialChars"/>
+                                </StackPanel>
+                                
+                                <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <StackPanel.Styles>
+                                                <Style Selector="TextBlock">
+                                                        <Setter Property="FontSize" Value="24"/>
+                                                </Style>
+                                        </StackPanel.Styles>
+                                        
+                                        <TextBlock Text="Robustesse: "/>
+                                        <TextBlock Text="Moyen" Name="tbkStrenght"/>
                                 </StackPanel>
                         </Grid>
                 </TabItem>
