@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" Width="700" Height="400"
         x:Class="CryptoVault.MainWindow"
         Title="CryptoVault">
         <TabControl>
@@ -12,7 +12,15 @@
                         </Style>
                 </TabControl.Styles>
                 <TabItem Header="Analyse de mot de passe">
-                        <Rectangle Fill="Red"/>
+                        <Grid ShowGridLines="True" RowDefinitions="*, 2*" ColumnDefinitions="*, *">
+                                <TextBox Grid.ColumnSpan="2" Height="15" Margin="150, 0" PlaceholderText="Entrez votre mot de passe"/>
+                                
+                                <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,200,0">
+                                        <TextBlock Text="test"/>
+                                        <TextBlock Text="test"/>
+                                        <TextBlock Text="test"/>
+                                </StackPanel>
+                        </Grid>
                 </TabItem>
                 <TabItem Header="Gestionaire clées API">
                         <Rectangle Fill="Blue"/>
