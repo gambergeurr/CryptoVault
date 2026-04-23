@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace CryptoVault.modules;
 
@@ -29,7 +32,7 @@ public partial class Steganography : UserControl
         
         if (image.Count >= 1)
         {
-            Console.Write(image[0].TryGetLocalPath());
+            steganoServices.Hide(Encoding.UTF8.GetBytes("test"), "test", Image<Rgba32>.Load<Rgba32>(image[0].TryGetLocalPath()));
         }
     }
 }
