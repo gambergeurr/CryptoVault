@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Width="700" Height="400"
+        xmlns:modules="clr-namespace:CryptoVault.modules"
         x:Class="CryptoVault.MainWindow"
         Title="CryptoVault">
         <TabControl>
@@ -12,43 +13,19 @@
                         </Style>
                 </TabControl.Styles>
                 <TabItem Header="Analyse de mot de passe">
-                        <Grid RowDefinitions="*, 2*" ColumnDefinitions="*, *">
-                                <TextBox Name="tbxPasswordAnalyzer" Grid.ColumnSpan="2" Height="15" Margin="150, 0" PlaceholderText="Entrez votre mot de passe" TextChanged="AnalyzePassword"/>
-                                
-                                <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,200,0">
-                                        <StackPanel.Styles>
-                                                <Style Selector="TextBlock">
-                                                        <Setter Property="FontSize" Value="16"/>
-                                                </Style>
-                                        </StackPanel.Styles>
-                                        
-                                        <TextBlock Text="☒" Name="tbkCaps"/>
-                                        <TextBlock Text="☑" Name="tbkLower"/>
-                                        <TextBlock Text="test" Name="tbkLenght"/>
-                                        <TextBlock Text="test" Name="tbkNumbers"/>
-                                        <TextBlock Text="test" Name="tbkSpecialChars"/>
-                                </StackPanel>
-                                
-                                <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <StackPanel.Styles>
-                                                <Style Selector="TextBlock">
-                                                        <Setter Property="FontSize" Value="24"/>
-                                                </Style>
-                                        </StackPanel.Styles>
-                                        
-                                        <TextBlock Text="Robustesse: "/>
-                                        <TextBlock Text="Moyen" Name="tbkStrenght"/>
-                                </StackPanel>
-                        </Grid>
+                        <modules:PasswordAnalyzer/>
                 </TabItem>
+                        
                 <TabItem Header="Gestionaire clées API">
                         <Rectangle Fill="Blue"/>
                 </TabItem>
+                
                 <TabItem Header="Fichiers sécurisés">
                         <Rectangle Fill="Yellow"/>
                 </TabItem>
+                
                 <TabItem Header="Stéganographie">
-                        <Rectangle Fill="Green"/>
+                        <modules:Steganography/>
                 </TabItem>
         </TabControl>
 </Window>
