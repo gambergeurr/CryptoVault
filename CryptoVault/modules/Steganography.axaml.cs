@@ -34,7 +34,7 @@ public partial class Steganography : UserControl
         
         if (image.Count >= 1)
         {
-            SixLabors.ImageSharp.Image blbal = steganoServices.Hide(Encoding.UTF8.GetBytes("je suis une data2"), "test", Image<Rgba32>.Load<Rgba32>(image[0].TryGetLocalPath()));
+            SixLabors.ImageSharp.Image blbal = steganoServices.Hide(Encoding.UTF8.GetBytes("test"), "test", Image<Rgba32>.Load<Rgba32>(image[0].TryGetLocalPath()));
 
             PngEncoder saveOptions = new PngEncoder {ColorType = PngColorType.RgbWithAlpha};
             blbal.SaveAsPng("C:/Users/calamerq1/Desktop/superimage.png", saveOptions);

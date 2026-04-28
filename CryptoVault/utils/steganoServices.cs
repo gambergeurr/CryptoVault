@@ -74,7 +74,7 @@ public static class steganoServices
             // index of the next nibble in the [i / 2]th byte
             int index = 7 - ((i * 4) % 8);
     
-            // 4. getting the indexed byte to position 0 and setting every other to 0
+            // getting the indexed byte to position 0 and setting every other to 0
             uint bitR = (uint)((data[i / 2] >> index) & 1);
             uint bitG = (uint)((data[i / 2] >> (index - 1)) & 1);
             uint bitB = (uint)((data[i / 2] >> (index - 2)) & 1);
@@ -111,7 +111,32 @@ public static class steganoServices
             payloadSize = (uint)((payloadSize << 1) | pixel.B & 1);
             payloadSize = (uint)((payloadSize << 1) | pixel.A & 1);
         }
+
+        byte[] data = new byte[payloadSize / 8];
         
-        return null;
+        for (int i = 0; i < payloadSize / 4; i++)
+        {
+            int x = order[i + 8] % camoImage.Width;
+            int y = order[i + 8] / camoImage.Width;
+            
+            Rgba32 pixel = camoImage[x, y];
+            
+            // get every lsb of the pixel
+            uint bitR = (uint)(pixel.R & 1);
+            uint bitG = (uint)(pixel.G & 1);
+            uint bitB = (uint)(pixel.B & 1);
+            uint bitA = (uint)(pixel.A & 1);
+
+            // index of the next nibble to write in the [i / 8] byte
+            int index = 7 - ((i * 4) % 8);
+
+            // writing the next msb and shifting
+            data[i / 2] |= (byte)(bitR << index);
+            data[i / 2] |= (byte)(bitG << (index - 1));
+            data[i / 2] |= (byte)(bitB << (index - 2));
+            data[i / 2] |= (byte)(bitA << (index - 3));
+        }
+        
+        return data;
     }
 }
