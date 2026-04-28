@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Avalonia;
@@ -34,7 +35,8 @@ public partial class Steganography : UserControl
         
         if (image.Count >= 1)
         {
-            SixLabors.ImageSharp.Image blbal = steganoServices.Hide(Encoding.UTF8.GetBytes("test"), "test", Image<Rgba32>.Load<Rgba32>(image[0].TryGetLocalPath()));
+            (string, byte[]) testFile = ("music.xm", File.ReadAllBytes("C:/Users/calamerq1/Downloads/mini1111 (1).xm"));
+            SixLabors.ImageSharp.Image blbal = steganoServices.Hide(SerializeTuple(testFile), "test", Image<Rgba32>.Load<Rgba32>(image[0].TryGetLocalPath()));
 
             PngEncoder saveOptions = new PngEncoder {ColorType = PngColorType.RgbWithAlpha};
             blbal.SaveAsPng("C:/Users/calamerq1/Desktop/superimage.png", saveOptions);
@@ -54,7 +56,39 @@ public partial class Steganography : UserControl
         
         if (image.Count >= 1)
         {
-            steganoServices.Unhide("test", Image<Rgba32>.Load<Rgba32>(image[0].TryGetLocalPath()));
+            byte[] test = steganoServices.Unhide("test", Image<Rgba32>.Load<Rgba32>(image[0].TryGetLocalPath()));
+            
+            (string name, byte[] data) tuple = DeserializeTuple(test);
+            File.WriteAllBytes($"C:/Users/calamerq1/Desktop/{tuple.name}", tuple.data);
+        }
+    }
+
+    private byte[] SerializeTuple((string name, byte[] data) file)
+    {
+        using (MemoryStream ms = new MemoryStream())
+        {
+            using (BinaryWriter writer = new BinaryWriter(ms, Encoding.UTF8))
+            {
+                writer.Write(file.name);
+                writer.Write(file.data.Length);
+                writer.Write(file.data);
+            }
+            return ms.ToArray();
+        }
+    }
+
+    private (string, byte[]) DeserializeTuple(byte[] tuple)
+    {
+        using (MemoryStream ms = new MemoryStream(tuple))
+        {
+            using (BinaryReader reader = new BinaryReader(ms, Encoding.UTF8))
+            {
+                string name = reader.ReadString();
+                int dataLenght = reader.ReadInt32(); // how long is the data
+                byte[] data = reader.ReadBytes(dataLenght);
+                
+                return (name, data);
+            }
         }
     }
 }
