@@ -17,7 +17,7 @@
                 </TabItem>
                         
                 <TabItem Header="Gestionaire clées API">
-                        <Rectangle Fill="Blue"/>
+                        <modules:ApiManager/>
                 </TabItem>
                 
                 <TabItem Header="Fichiers sécurisés">
