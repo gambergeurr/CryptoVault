@@ -45,7 +45,7 @@ public partial class PasswordAnalyzer : UserControl
         }
         else
         {
-            tbkLenght.Text  = "☒ Longueur";
+            tbkLenght.Text  = "☒ Longueur (10 char.)";
         }
         
         if (PasswordChecker.CheckNumber(password))

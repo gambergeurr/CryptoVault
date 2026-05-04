@@ -2,10 +2,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:CryptoVault.controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="CryptoVault.modules.ApiManager">
-    <Grid ColumnDefinitions="2*, 3*" ShowGridLines="True">
-        <ListBox></ListBox>
-        
+    <Grid ColumnDefinitions="2*, 3*" ShowGridLines="False">
+        <Grid Grid.Column="0" RowDefinitions="*, Auto">
+            <ListBox Name="lbKeys" SelectionChanged="LbKeys_OnSelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" Margin="5"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Grid.Row="1" Content="Ajouter" Click="BtnAdd_OnClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5"/>
+        </Grid>
+        <controls:KeyInfo Name="keyInfo" Grid.Column="1" IsVisible="False" KeyChanged="KeyInfo_OnKeyChanged" KeyDeleted="KeyInfo_OnKeyDeleted" Margin="10"/>
     </Grid>
 </UserControl>

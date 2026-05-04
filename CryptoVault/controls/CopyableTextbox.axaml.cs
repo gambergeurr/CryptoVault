@@ -8,24 +8,22 @@ namespace CryptoVault.controls;
 
 public partial class CopyableTextbox : UserControl
 {
+    public static readonly StyledProperty<char> PasswordCharProperty =
+        AvaloniaProperty.Register<CopyableTextbox, char>(nameof(PasswordChar), defaultValue: '\0');
+
     public char PasswordChar
     {
-        get;
-        set
-        {
-            field = value;
-            tbxContent.PasswordChar = value;
-        }
+        get => GetValue(PasswordCharProperty);
+        set => SetValue(PasswordCharProperty, value);
     }
+
+    public static readonly StyledProperty<string> TbxTextProperty =
+        AvaloniaProperty.Register<CopyableTextbox, string>(nameof(TbxText), defaultValue: string.Empty);
 
     public string TbxText
     {
-        get;
-        set
-        {
-            field = value;
-            tbxContent.Text = value;
-        }
+        get => GetValue(TbxTextProperty);
+        set => SetValue(TbxTextProperty, value);
     }
     
     public static readonly StyledProperty<bool> IsReadOnlyProperty =
@@ -59,7 +57,6 @@ public partial class CopyableTextbox : UserControl
     public CopyableTextbox()
     {
         InitializeComponent();
-        DataContext = this;
     }
 
     private void Button_OnClick(object? sender, RoutedEventArgs e)

@@ -8,7 +8,6 @@
     <UserControl.Styles>
         <Style Selector="controls|CopyableTextbox">
             <Setter Property="Margin" Value="20,0"/>
-            <Setter Property="IsReadOnly" Value="{DynamicResource tbxReadOnly}"/>
         </Style>
         <Style Selector="TextBlock.label">
             <Setter Property="Margin" Value="20, 0"/>
@@ -16,16 +15,16 @@
     </UserControl.Styles>
     <Grid RowDefinitions="Auto, Auto, Auto, Auto, *" RowSpacing="15">
         <Grid ColumnDefinitions="*, Auto" Margin="0,0,0,20">
-            <TextBox Name="tbxTitle" Watermark="Nom de l'élément" Text="{Binding Title}" Margin="5" FontWeight="Bold" FontSize="24" IsReadOnly="{Binding DisplayMode}"/>
-            <Button Name="btnEdit" Grid.Column="2" Content="Modifier" HorizontalAlignment="Right" Margin="5" Click="BtnEdit_OnClick"/>
+            <TextBox Name="tbxTitle" Watermark="Nom de l'élément" Text="{Binding $parent[UserControl].Title, Mode=TwoWay}" Margin="5" FontWeight="Bold" FontSize="24" IsReadOnly="{Binding $parent[UserControl].DisplayMode}"/>
+            <Button Name="btnEdit" Grid.Column="1" Content="Modifier" HorizontalAlignment="Right" Margin="5" Click="BtnEdit_OnClick"/>
         </Grid>
         <StackPanel Grid.Row="1">
             <TextBlock Classes="label" Text="Clé"/>
-            <controls:CopyableTextbox Name="tbxKey" PasswordChar="*" HasPasswordButton="True" IsReadOnly="{Binding DisplayMode}"/>
+            <controls:CopyableTextbox Name="tbxKey" PasswordChar="*" HasPasswordButton="True" IsReadOnly="{Binding $parent[UserControl].DisplayMode}"/>
         </StackPanel>
         <StackPanel Grid.Row="2">
             <TextBlock Classes="label" Text="Description"/>
-            <TextBox Margin="20,0" Name="tbxDescription" IsReadOnly="{Binding DisplayMode}"/>
+            <TextBox Margin="20,0" Name="tbxDescription" IsReadOnly="{Binding $parent[UserControl].DisplayMode}" Height="150" TextWrapping="Wrap" AcceptsReturn="True"/>
         </StackPanel>
         <StackPanel Grid.Row="3">
             <TextBlock Classes="label" Text="Date"/>

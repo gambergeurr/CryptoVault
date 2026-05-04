@@ -16,11 +16,11 @@
                         <modules:PasswordAnalyzer/>
                 </TabItem>
                         
-                <TabItem Header="Gestionaire clées API">
+                <TabItem Header="Gestionaire clées API" x:Name="tabApi">
                         <modules:LockedModule PasswordEntered="TryDecrypt"/>
                 </TabItem>
                 
-                <TabItem Header="Fichiers sécurisés">
+                <TabItem Header="Fichiers sécurisés" x:Name="tabFiles">
                         <modules:LockedModule PasswordEntered="TryDecrypt"/>
                 </TabItem>
                 

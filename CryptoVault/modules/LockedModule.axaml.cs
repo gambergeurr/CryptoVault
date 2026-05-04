@@ -16,6 +16,6 @@ public partial class LockedModule : UserControl
 
     private void ValidatePassword(object? sender, RoutedEventArgs e)
     {
-        PasswordEntered.Invoke(sender, e);
+        PasswordEntered?.Invoke(this, e);
     }
 }
