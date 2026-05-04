@@ -1,0 +1,37 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:CryptoVault.controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="CryptoVault.controls.KeyInfo">
+    <UserControl.Styles>
+        <Style Selector="controls|CopyableTextbox">
+            <Setter Property="Margin" Value="20,0"/>
+            <Setter Property="IsReadOnly" Value="{DynamicResource tbxReadOnly}"/>
+        </Style>
+        <Style Selector="TextBlock.label">
+            <Setter Property="Margin" Value="20, 0"/>
+        </Style>
+    </UserControl.Styles>
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, *" RowSpacing="15">
+        <Grid ColumnDefinitions="*, Auto" Margin="0,0,0,20">
+            <TextBox Name="tbxTitle" Watermark="Nom de l'élément" Text="{Binding Title}" Margin="5" FontWeight="Bold" FontSize="24" IsReadOnly="{Binding DisplayMode}"/>
+            <Button Name="btnEdit" Grid.Column="2" Content="Modifier" HorizontalAlignment="Right" Margin="5" Click="BtnEdit_OnClick"/>
+        </Grid>
+        <StackPanel Grid.Row="1">
+            <TextBlock Classes="label" Text="Clé"/>
+            <controls:CopyableTextbox Name="tbxKey" PasswordChar="*" HasPasswordButton="True" IsReadOnly="{Binding DisplayMode}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2">
+            <TextBlock Classes="label" Text="Description"/>
+            <TextBox Margin="20,0" Name="tbxDescription" IsReadOnly="{Binding DisplayMode}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3">
+            <TextBlock Classes="label" Text="Date"/>
+            <TextBlock Classes="label" Name="tbxDate" Text="Datedata" FontSize="16"/>
+        </StackPanel>
+        <Button Name="btnValider" Grid.Row="4" Content="Valider" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="7" IsVisible="False" Click="BtnValider_OnClick"/>
+        <Button Name="btnDelete" Grid.Row="4" Content="Supprimer" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="7" IsVisible="False" Click="BtnDelete_OnClick"/>
+    </Grid>
+</UserControl>

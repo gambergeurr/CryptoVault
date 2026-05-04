@@ -6,5 +6,6 @@
              x:Class="CryptoVault.modules.ApiManager">
     <Grid ColumnDefinitions="2*, 3*" ShowGridLines="True">
         <ListBox></ListBox>
+        
     </Grid>
 </UserControl>

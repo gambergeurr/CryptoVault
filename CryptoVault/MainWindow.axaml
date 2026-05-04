@@ -17,11 +17,11 @@
                 </TabItem>
                         
                 <TabItem Header="Gestionaire clées API">
-                        <modules:ApiManager/>
+                        <modules:LockedModule PasswordEntered="TryDecrypt"/>
                 </TabItem>
                 
                 <TabItem Header="Fichiers sécurisés">
-                        <Rectangle Fill="Yellow"/>
+                        <modules:LockedModule PasswordEntered="TryDecrypt"/>
                 </TabItem>
                 
                 <TabItem Header="Stéganographie">

@@ -1,0 +1,14 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="CryptoVault.modules.LockedModule"
+             Background="Blue">
+    <StackPanel HorizontalAlignment="Center" Background="Red">
+        <TextBlock Text="🔒" FontSize="130" TextAlignment="Center"/>
+        <TextBlock Text="Vérouillé: entrez le mot de passe" TextAlignment="Center" Margin="0,7" FontSize="18"/>
+        <TextBox Name="tbxPassword" Width="250"/>
+        <Button Content="Valider" HorizontalAlignment="Center" Margin="7" Width="100" HorizontalContentAlignment="Center" Click="ValidatePassword"/>
+    </StackPanel>
+</UserControl>
