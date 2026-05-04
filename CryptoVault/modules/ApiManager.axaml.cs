@@ -96,9 +96,9 @@ public partial class ApiManager : UserControl
             selectedKey.Key = keyInfo.tbxKey.TbxText ?? "";
             selectedKey.Desctiption = keyInfo.tbxDescription.Text ?? "";
             
-            if (DateOnly.TryParse(keyInfo.tbxDate.Text, out DateOnly date))
+            if (keyInfo.dpDate.SelectedDate.HasValue)
             {
-                selectedKey.ExpirationDate = date;
+                selectedKey.ExpirationDate = DateOnly.FromDateTime(keyInfo.dpDate.SelectedDate.Value.Date);
             }
             
             SaveKeys();

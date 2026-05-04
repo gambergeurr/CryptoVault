@@ -27,8 +27,12 @@
             <TextBox Margin="20,0" Name="tbxDescription" IsReadOnly="{Binding $parent[UserControl].DisplayMode}" Height="150" TextWrapping="Wrap" AcceptsReturn="True"/>
         </StackPanel>
         <StackPanel Grid.Row="3">
-            <TextBlock Classes="label" Text="Date"/>
-            <TextBlock Classes="label" Name="tbxDate" Text="Datedata" FontSize="16"/>
+            <TextBlock Classes="label" Text="Date d'expiration"/>
+            <Grid Margin="20,0" ColumnDefinitions="Auto, *">
+                <CalendarDatePicker Name="dpDate" IsVisible="{Binding !$parent[UserControl].DisplayMode}" Margin="0,0,10,0"/>
+                <TextBlock Name="txtDateDisplay" IsVisible="{Binding $parent[UserControl].DisplayMode}" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="16"/>
+                <TextBlock Name="txtRemainingDays" Grid.Column="1" VerticalAlignment="Center" FontSize="14" FontStyle="Italic"/>
+            </Grid>
         </StackPanel>
         <Button Name="btnValider" Grid.Row="4" Content="Valider" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="7" IsVisible="False" Click="BtnValider_OnClick"/>
         <Button Name="btnDelete" Grid.Row="4" Content="Supprimer" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="7" IsVisible="False" Click="BtnDelete_OnClick"/>

@@ -59,7 +59,9 @@ public partial class KeyInfo : UserControl
         tbxTitle.Text = null;
         tbxKey.TbxText = null;
         tbxDescription.Text = null;
-        tbxDate.Text = null;
+        dpDate.SelectedDate = null;
+        txtDateDisplay.Text = null;
+        txtRemainingDays.Text = null;
         
         SetEditMode(false);
         KeyDeleted?.Invoke(this, EventArgs.Empty);
@@ -71,7 +73,29 @@ public partial class KeyInfo : UserControl
         Title = k.Name;
         tbxKey.TbxText = k.Key;
         tbxDescription.Text = k.Desctiption;
-        tbxDate.Text = k.ExpirationDate.ToShortDateString();
+        dpDate.SelectedDate = k.ExpirationDate.ToDateTime(TimeOnly.MinValue);
+        txtDateDisplay.Text = k.ExpirationDate.ToShortDateString();
+        UpdateRemainingDaysDisplay(k.ExpirationDate);
+    }
+
+    private void UpdateRemainingDaysDisplay(DateOnly expirationDate)
+    {
+        int daysRemaining = (expirationDate.ToDateTime(TimeOnly.MinValue) - DateTime.Now.Date).Days;
+        if (daysRemaining > 0)
+        {
+            txtRemainingDays.Text = $"({daysRemaining} jours restants)";
+            txtRemainingDays.Foreground = Avalonia.Media.Brushes.Gray;
+        }
+        else if (daysRemaining == 0)
+        {
+            txtRemainingDays.Text = "(Expire aujourd'hui)";
+            txtRemainingDays.Foreground = Avalonia.Media.Brushes.Orange;
+        }
+        else
+        {
+            txtRemainingDays.Text = $"(Expiré depuis {-daysRemaining} jours)";
+            txtRemainingDays.Foreground = Avalonia.Media.Brushes.Red;
+        }
     }
 
 

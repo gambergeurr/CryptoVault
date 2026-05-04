@@ -8,7 +8,7 @@
     <Grid ColumnDefinitions="*, Auto">
         <TextBox Name="tbxContent"
                  Watermark="Aucun"
-                 IsReadOnly="{Binding $parent[UserControl].IsReadOnly}"
+                 Focusable="{Binding !$parent[UserControl].IsReadOnly}"
                  PasswordChar="{Binding $parent[UserControl].PasswordChar}"
                  Text="{Binding $parent[UserControl].TbxText, Mode=TwoWay}"/>
         <Button Grid.Column="1" Padding="2" Click="Button_OnClick" VerticalAlignment="Stretch">
