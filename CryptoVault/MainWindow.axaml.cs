@@ -27,7 +27,7 @@ public partial class MainWindow : Window
                 
                 // If successful, swap the LockedModule with the real modules.
                 tabApi.Content = apiManager;
-                tabFiles.Content = new TextBlock { Text = "Fichiers sécurisés déverrouillés", HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center, VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center };
+                tabFiles.Content = new modules.SecureFilesManager(key);
             }
             catch
             {

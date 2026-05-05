@@ -1,0 +1,34 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:modules="clr-namespace:CryptoVault.modules"
+             xmlns:cryptoVault="clr-namespace:CryptoVault"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="CryptoVault.modules.SecureFilesManager">
+    <Grid RowDefinitions="Auto, *, Auto">
+        <StackPanel Orientation="Horizontal" Spacing="10" Margin="5" Grid.Row="0">
+            <Button Name="btnGoUp" Content="⬆ Dossier Parent" Click="BtnGoUp_OnClick"/>
+            <TextBlock Name="txtCurrentPath" VerticalAlignment="Center" FontWeight="Bold" Text="/"/>
+        </StackPanel>
+        
+        <ListBox Name="lbFiles" Grid.Row="1" Margin="5" DoubleTapped="LbFiles_DoubleTapped" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="cryptoVault:FileSystemNode">
+                    <StackPanel Orientation="Horizontal" Spacing="5" Background="Transparent">
+                        <TextBlock Text="{Binding Icon}"/>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <StackPanel Orientation="Horizontal" Spacing="10" Margin="5" Grid.Row="2">
+            <Button Name="btnAddFile" Content="Importer un fichier" Click="BtnAddFile_OnClick"/>
+            <Button Name="btnImportFolder" Content="Importer un dossier" Click="BtnImportFolder_OnClick"/>
+            <Button Name="btnDelete" Content="Supprimer" Click="BtnDelete_OnClick"/>
+            <Button Name="btnExtract" Content="Télécharger" Click="BtnExtract_OnClick"/>
+            <Button Name="btnCheckIntegrity" Content="Vérifier l'intégrité" Click="BtnCheckIntegrity_OnClick"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
