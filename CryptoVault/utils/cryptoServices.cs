@@ -63,6 +63,6 @@ public static class CryptoService
     public static string Hash(byte[] data)
     {
         byte[] hashBytes = SHA256.HashData(data);
-        return BitConverter.ToString(hashBytes).Replace("-", "").ToLowerInvariant();
+        return Convert.ToHexString(hashBytes);
     }
 }

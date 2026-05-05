@@ -53,12 +53,12 @@ public partial class IntegrityCheckWindow : Window
 
                 if (localHash == vaultHash)
                 {
-                    txtStatus.Text = "✅ Intégrité vérifiée : Les fichiers sont identiques.";
+                    txtStatus.Text = "✅ Les fichiers sont identiques.";
                     txtStatus.Foreground = Brushes.Green;
                 }
                 else
                 {
-                    txtStatus.Text = "❌ Alerte : Le fichier a été modifié !";
+                    txtStatus.Text = "❌ Le fichier a été modifié.";
                     txtStatus.Foreground = Brushes.Red;
                 }
             }
