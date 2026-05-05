@@ -368,6 +368,40 @@ public partial class SecureFilesManager : UserControl
 
     private void BtnCheckIntegrity_OnClick(object? sender, RoutedEventArgs e)
     {
-        throw new NotImplementedException();
+        FileSystemNode selectedNode = lbFiles.SelectedItem as FileSystemNode;
+        if (selectedNode.IsDirectory)
+        {
+            // Only files can be checked for integrity
+            return;
+        }
+
+        try
+        {
+            byte[] encryptedData = File.ReadAllBytes(vaultPath);
+            byte[] decryptedData = CryptoService.Decrypt(encryptedData, key);
+            
+            using var ms = new MemoryStream(decryptedData);
+            using var archive = new ZipArchive(ms, ZipArchiveMode.Read);
+            
+            var entry = archive.GetEntry(selectedNode.FullPath);
+            if (entry == null) return;
+
+            using var entryStream = entry.Open();
+            using var entryMs = new MemoryStream();
+            entryStream.CopyTo(entryMs);
+            byte[] fileData = entryMs.ToArray();
+
+            string vaultHash = CryptoService.Hash(fileData);
+
+            var integrityWindow = new IntegrityCheckWindow(selectedNode.Name, vaultHash);
+            var topLevel = TopLevel.GetTopLevel(this);
+            if (topLevel is Window mainWindow)
+            {
+                integrityWindow.ShowDialog(mainWindow);
+            }
+        }
+        catch (Exception ex)
+        {
+        }
     }
 }

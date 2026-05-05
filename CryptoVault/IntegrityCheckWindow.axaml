@@ -1,0 +1,26 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="300"
+        Width="550" Height="300"
+        x:Class="CryptoVault.IntegrityCheckWindow"
+        Title="Vérification d'intégrité"
+        WindowStartupLocation="CenterOwner">
+    <StackPanel Margin="20" Spacing="15">
+        <TextBlock Name="txtFileName" FontSize="18" FontWeight="Bold" Text="Fichier: ..."/>
+        
+        <StackPanel Spacing="5">
+            <TextBlock Text="Hash SHA-256 dans le coffre:" FontWeight="SemiBold"/>
+            <TextBox Name="txtVaultHash" IsReadOnly="True" Text="..." FontFamily="Cascadia Code,Consolas,Monospace"/>
+        </StackPanel>
+
+        <Button Name="btnSelectLocal" Content="Comparer avec un fichier local" Click="BtnSelectLocal_OnClick" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+
+        <StackPanel Name="panelLocalResult" Spacing="5" IsVisible="False">
+            <TextBlock Text="Hash SHA-256 du fichier local:" FontWeight="SemiBold"/>
+            <TextBox Name="txtLocalHash" IsReadOnly="True" FontFamily="Cascadia Code,Consolas,Monospace"/>
+            <TextBlock Name="txtStatus" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
