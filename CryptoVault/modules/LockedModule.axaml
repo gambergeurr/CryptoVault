@@ -3,12 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="CryptoVault.modules.LockedModule"
-             Background="Blue">
-    <StackPanel HorizontalAlignment="Center" Background="Red">
+             x:Class="CryptoVault.modules.LockedModule">
+    <StackPanel HorizontalAlignment="Center">
         <TextBlock Text="🔒" FontSize="130" TextAlignment="Center"/>
         <TextBlock Text="Vérouillé: entrez le mot de passe" TextAlignment="Center" Margin="0,7" FontSize="18"/>
-        <TextBox Name="tbxPassword" Width="250"/>
+        <TextBox Name="tbxPassword" Width="250" PasswordChar="*"/>
         <Button Content="Valider" HorizontalAlignment="Center" Margin="7" Width="100" HorizontalContentAlignment="Center" Click="ValidatePassword"/>
     </StackPanel>
 </UserControl>
