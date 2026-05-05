@@ -34,7 +34,7 @@ public partial class SecureFilesManager : UserControl
         vaultPath = Path.Combine(vaultDir, "securefiles.enc");
 
         LoadFileSystem();
-        NavigateToNode(null);
+        NavigateToNode(null); // root directory
     }
 
     private void NavigateToNode(FileSystemNode? node)
@@ -87,7 +87,7 @@ public partial class SecureFilesManager : UserControl
             
             foreach (var entry in archive.Entries)
             {
-                AddNodeFromPath(entry.FullName);
+                AddNode(entry.FullName);
             }
         }
         catch
@@ -96,7 +96,7 @@ public partial class SecureFilesManager : UserControl
         }
     }
 
-    private void AddNodeFromPath(string path)
+    private void AddNode(string path)
     {
         string[] parts = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length == 0) return;
