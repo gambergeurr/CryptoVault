@@ -369,7 +369,7 @@ public partial class SecureFilesManager : UserControl
     private void BtnCheckIntegrity_OnClick(object? sender, RoutedEventArgs e)
     {
         FileSystemNode selectedNode = lbFiles.SelectedItem as FileSystemNode;
-        if (selectedNode.IsDirectory)
+        if (selectedNode == null || selectedNode.IsDirectory)
         {
             // Only files can be checked for integrity
             return;

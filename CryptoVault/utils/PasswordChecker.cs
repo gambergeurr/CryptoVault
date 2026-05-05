@@ -20,7 +20,7 @@ public static class PasswordChecker
     {
         foreach (char c in password)
         {
-            if (!char.IsUpper(c))
+            if (char.IsLower(c))
             {
                 return true;
             }

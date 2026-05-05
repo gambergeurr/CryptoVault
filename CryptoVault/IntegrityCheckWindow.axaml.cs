@@ -22,8 +22,8 @@ public partial class IntegrityCheckWindow : Window
 
     public IntegrityCheckWindow(string fileName, string vaultHash) : this()
     {
-        fileName = fileName;
-        vaultHash = vaultHash;
+        this.fileName = fileName;
+        this.vaultHash = vaultHash;
         
         txtFileName.Text = $"Fichier: {fileName}";
         txtVaultHash.Text = vaultHash;
