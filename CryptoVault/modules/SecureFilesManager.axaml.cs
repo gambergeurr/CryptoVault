@@ -17,7 +17,7 @@ public partial class SecureFilesManager : UserControl
     private string vaultPath;
     public ObservableCollection<FileSystemNode> RootNodes { get; set; } = new();
     public ObservableCollection<FileSystemNode> CurrentDisplayNodes { get; set; } = new();
-    private FileSystemNode? _currentNode;
+    private FileSystemNode? currentNode;
 
     public SecureFilesManager()
     {
@@ -39,7 +39,7 @@ public partial class SecureFilesManager : UserControl
 
     private void NavigateToNode(FileSystemNode? node)
     {
-        _currentNode = node;
+        currentNode = node;
         CurrentDisplayNodes.Clear();
         
         var items = node == null ? RootNodes : node.Children;
@@ -55,9 +55,9 @@ public partial class SecureFilesManager : UserControl
 
     private void BtnGoUp_OnClick(object? sender, RoutedEventArgs e)
     {
-        if (_currentNode != null)
+        if (currentNode != null)
         {
-            NavigateToNode(_currentNode.Parent);
+            NavigateToNode(currentNode.Parent);
         }
     }
 
@@ -170,7 +170,7 @@ public partial class SecureFilesManager : UserControl
         File.WriteAllBytes(vaultPath, newEncryptedData);
 
         LoadFileSystem();
-        NavigateToNode(_currentNode == null ? null : ReFindNode(_currentNode.FullPath));
+        NavigateToNode(currentNode == null ? null : ReFindNode(currentNode.FullPath));
     }
 
     private FileSystemNode? ReFindNode(string fullPath)
@@ -205,7 +205,7 @@ public partial class SecureFilesManager : UserControl
             {
                 foreach (var file in files)
                 {
-                    string basePath = _currentNode != null ? _currentNode.FullPath : "";
+                    string basePath = currentNode != null ? currentNode.FullPath : "";
 
                     string entryName = basePath + file.Name;
                     
@@ -263,7 +263,7 @@ public partial class SecureFilesManager : UserControl
             if (folder.TryGetLocalPath() is string localFolderPath)
             {
                 string folderName = new DirectoryInfo(localFolderPath).Name;
-                string basePath = _currentNode != null ? _currentNode.FullPath : "";
+                string basePath = currentNode != null ? currentNode.FullPath : "";
                 string baseEntryPath = basePath + folderName + "/";
 
                 SaveFileSystem(archive =>

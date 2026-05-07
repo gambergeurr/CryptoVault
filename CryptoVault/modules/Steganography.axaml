@@ -4,8 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="CryptoVault.modules.Steganography">
-    <StackPanel>
-        <Button Content="click moi" Click="Button_OnClick"/>
-        <Button Content="dechacher" Click="dechache"/>
-    </StackPanel>
+        <Grid ColumnDefinitions="*,*" RowDefinitions="4*, 5*, *">
+            <Grid ColumnDefinitions="*,*">
+                <Border Background="LightGray" Margin="5">
+                    <Image Name="ImageBox"/>
+                </Border>
+                <Button Name="btnImageSelect" Click="SelectImage" Grid.Column="1" Content="Choisir un fichier" HorizontalAlignment="Center"/>
+            </Grid>
+            
+            <TextBox Grid.Row="1" Margin="7" AcceptsReturn="True"/>
+            
+            <Grid Grid.Row="1" Grid.Column="1" RowDefinitions="*,*">
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="Mot de passe"/>
+                    <TextBox PasswordChar="*"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
+                    <Button Content="Cacher" FontSize="24" Padding="20, 10"/>
+                    <Button Content="Revéler" FontSize="24" Padding="20, 10"/>
+                </StackPanel>
+            </Grid>
+            
+            <Grid Grid.Row="2" Margin="7">
+                <Button HorizontalAlignment="Left" Content="Charger un fichier"/>
+                <Button HorizontalAlignment="Right" Content="Télécharge le fichier"/>
+            </Grid>
+        </Grid>
 </UserControl>
