@@ -12,7 +12,7 @@
                 <Button Name="btnImageSelect" Click="SelectImage" Grid.Column="1" Content="Choisir un fichier" HorizontalAlignment="Center"/>
             </Grid>
             
-            <TextBox Grid.Row="1" Margin="7" AcceptsReturn="True"/>
+            <TextBox Name="tbxContent" Grid.Row="1" Margin="7" AcceptsReturn="True"/>
             
             <Grid Grid.Row="1" Grid.Column="1" RowDefinitions="*,*">
                 <StackPanel VerticalAlignment="Center">
@@ -26,7 +26,7 @@
             </Grid>
             
             <Grid Grid.Row="2" Margin="7">
-                <Button HorizontalAlignment="Left" Content="Charger un fichier"/>
+                <Button Name="BtnLoadFile" Click="LoadFile" HorizontalAlignment="Left" Content="Charger un fichier"/>
                 <Button HorizontalAlignment="Right" Content="Télécharge le fichier"/>
             </Grid>
         </Grid>

@@ -7,6 +7,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media.Imaging;
 using Avalonia.Platform.Storage;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
@@ -17,50 +18,11 @@ namespace CryptoVault.modules;
 
 public partial class Steganography : UserControl
 {
+    private SixLabors.ImageSharp.Image<Rgba32> CamoImage;
+    private string FileName;
     public Steganography()
     {
         InitializeComponent();
-    }
-
-    private async void Button_OnClick(object? sender, RoutedEventArgs e)
-    {
-        FilePickerOpenOptions options = new FilePickerOpenOptions
-        {
-            Title = "Choisir un image",
-            AllowMultiple =  false,
-            FileTypeFilter = new[] {FilePickerFileTypes.ImagePng}
-        };
-        
-        IReadOnlyList<IStorageFile> image = await TopLevel.GetTopLevel(this).StorageProvider.OpenFilePickerAsync(options);
-        
-        if (image.Count >= 1)
-        {
-            (string, byte[]) testFile = ("music.xm", File.ReadAllBytes("C:/Users/calamerq1/Downloads/mini1111 (1).xm"));
-            SixLabors.ImageSharp.Image blbal = steganoServices.Hide(SerializeTuple(testFile), "test", Image<Rgba32>.Load<Rgba32>(image[0].TryGetLocalPath()));
-
-            PngEncoder saveOptions = new PngEncoder {ColorType = PngColorType.RgbWithAlpha};
-            blbal.SaveAsPng("C:/Users/calamerq1/Desktop/superimage.png", saveOptions);
-        }
-    }
-
-    private async void dechache(object? sender, RoutedEventArgs e)
-    {
-        FilePickerOpenOptions options = new FilePickerOpenOptions
-        {
-            Title = "Choisir un image",
-            AllowMultiple =  false,
-            FileTypeFilter = new[] {FilePickerFileTypes.ImagePng}
-        };
-        
-        IReadOnlyList<IStorageFile> image = await TopLevel.GetTopLevel(this).StorageProvider.OpenFilePickerAsync(options);
-        
-        if (image.Count >= 1)
-        {
-            byte[] test = steganoServices.Unhide("test", Image<Rgba32>.Load<Rgba32>(image[0].TryGetLocalPath()));
-            
-            (string name, byte[] data) tuple = DeserializeTuple(test);
-            File.WriteAllBytes($"C:/Users/calamerq1/Desktop/{tuple.name}", tuple.data);
-        }
     }
 
     private byte[] SerializeTuple((string name, byte[] data) file)
@@ -89,6 +51,42 @@ public partial class Steganography : UserControl
                 
                 return (name, data);
             }
+        }
+    }
+
+    private async void SelectImage(object? sender, RoutedEventArgs e)
+    {
+        FilePickerOpenOptions options = new FilePickerOpenOptions
+        {
+            Title = "Choisir un image",
+            AllowMultiple =  false,
+            FileTypeFilter = new[] {FilePickerFileTypes.ImagePng}
+        };
+        
+        IReadOnlyList<IStorageFile> image = await TopLevel.GetTopLevel(this).StorageProvider.OpenFilePickerAsync(options);
+        
+        if (image.Count >= 1)
+        {
+            CamoImage = Image<Rgba32>.Load<Rgba32>(image[0].TryGetLocalPath());
+            ImageBox.Source = new Bitmap(image[0].TryGetLocalPath());
+        }
+    }
+
+    private async void LoadFile(object? sender, RoutedEventArgs e)
+    {
+        FilePickerOpenOptions options = new FilePickerOpenOptions
+        {
+            Title = "Choisir un fichier",
+            AllowMultiple =  false
+        };
+        
+        IReadOnlyList<IStorageFile> file = await TopLevel.GetTopLevel(this).StorageProvider.OpenFilePickerAsync(options);
+
+        if (file.Count >= 1)
+        {
+            FileName = file[0].Name;
+
+            tbxContent.Text = Encoding.UTF8.GetString(File.ReadAllBytes(file[0].TryGetLocalPath()));
         }
     }
 }
