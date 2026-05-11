@@ -30,8 +30,13 @@ public static class steganoServices
         
         return order;
     }
-    public static Image Hide(byte[] data, string password, Image<Rgba32> camoImage)
+    public static Image<Rgba32> Hide(byte[] data, string password, Image<Rgba32> camoImage)
     {
+        if (data.Length * 8 > (camoImage.Width * camoImage.Height * 4) - 32)
+        {
+            throw new ArgumentException("The data is too large for the image");
+        }
+        
         int[] order = CreateOrderArray(password, camoImage);
 
         uint payloadSize = (uint)data.Length * 8;
