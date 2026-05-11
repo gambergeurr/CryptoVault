@@ -12,22 +12,22 @@
                 <Button Name="btnImageSelect" Click="SelectImage" Grid.Column="1" Content="Choisir un fichier" HorizontalAlignment="Center"/>
             </Grid>
             
-            <TextBox Name="tbxContent" Grid.Row="1" Margin="7" AcceptsReturn="True"/>
+            <TextBox Name="tbxContent" Grid.Row="1" Margin="7" AcceptsReturn="True" Text="{Binding FileContent, Mode=TwoWay}"/>
             
             <Grid Grid.Row="1" Grid.Column="1" RowDefinitions="*,*">
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock Text="Mot de passe"/>
-                    <TextBox PasswordChar="*"/>
+                    <TextBox Name="tbxPassword" PasswordChar="*"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="30">
-                    <Button Content="Cacher" FontSize="24" Padding="20, 10"/>
-                    <Button Content="Revéler" FontSize="24" Padding="20, 10"/>
+                    <Button Click="HideData" Content="Cacher" FontSize="24" Padding="20, 10"/>
+                    <Button Click="UnHide" Content="Revéler" FontSize="24" Padding="20, 10"/>
                 </StackPanel>
             </Grid>
             
-            <Grid Grid.Row="2" Margin="7">
+            <Grid Grid.Row="2" Margin="7" ColumnDefinitions="*,*">
                 <Button Name="BtnLoadFile" Click="LoadFile" HorizontalAlignment="Left" Content="Charger un fichier"/>
-                <Button HorizontalAlignment="Right" Content="Télécharge le fichier"/>
+                <Button Grid.Column="1" HorizontalAlignment="Right" Name="BtnDownloadFile" Click="DownloadFile" Content="Télécharge le fichier"/>
             </Grid>
         </Grid>
 </UserControl>
