@@ -11,19 +11,38 @@ using Avalonia.Input;
 
 namespace CryptoVault.modules;
 
+/// <summary>
+/// User control for managing a secure, encrypted file vault.
+/// </summary>
 public partial class SecureFilesManager : UserControl
 {
     private byte[] key;
     private string vaultPath;
+
+    /// <summary>
+    /// Gets or sets the collection of root nodes in the virtual file system.
+    /// </summary>
     public ObservableCollection<FileSystemNode> RootNodes { get; set; } = new();
+
+    /// <summary>
+    /// Gets or sets the collection of nodes currently being displayed.
+    /// </summary>
     public ObservableCollection<FileSystemNode> CurrentDisplayNodes { get; set; } = new();
+    
     private FileSystemNode? currentNode;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SecureFilesManager"/> class.
+    /// </summary>
     public SecureFilesManager()
     {
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SecureFilesManager"/> class with a specific encryption key.
+    /// </summary>
+    /// <param name="key">The AES encryption key.</param>
     public SecureFilesManager(byte[] key) : this()
     {
         this.key = key;
@@ -37,6 +56,10 @@ public partial class SecureFilesManager : UserControl
         NavigateToNode(null); // root directory
     }
 
+    /// <summary>
+    /// Navigates to a specific node in the file system, updating the display.
+    /// </summary>
+    /// <param name="node">The target node to navigate to, or null for the root directory.</param>
     private void NavigateToNode(FileSystemNode? node)
     {
         currentNode = node;
@@ -53,6 +76,9 @@ public partial class SecureFilesManager : UserControl
         lbFiles.ItemsSource = CurrentDisplayNodes;
     }
 
+    /// <summary>
+    /// Event handler for navigating up one directory level.
+    /// </summary>
     private void BtnGoUp_OnClick(object? sender, RoutedEventArgs e)
     {
         if (currentNode != null)
@@ -61,6 +87,9 @@ public partial class SecureFilesManager : UserControl
         }
     }
 
+    /// <summary>
+    /// Event handler for double-tapping an item in the file list. Navigates into directories.
+    /// </summary>
     private void LbFiles_DoubleTapped(object? sender, TappedEventArgs e)
     {
         if (lbFiles.SelectedItem is FileSystemNode selectedNode)
@@ -72,6 +101,9 @@ public partial class SecureFilesManager : UserControl
         }
     }
 
+    /// <summary>
+    /// Loads and parses the encrypted file system archive into the virtual node structure.
+    /// </summary>
     private void LoadFileSystem()
     {
         RootNodes.Clear();
@@ -96,6 +128,10 @@ public partial class SecureFilesManager : UserControl
         }
     }
 
+    /// <summary>
+    /// Parses a file path from the zip archive and adds it to the virtual node structure.
+    /// </summary>
+    /// <param name="path">The full path of the entry within the archive.</param>
     private void AddNode(string path)
     {
         string[] parts = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
@@ -130,6 +166,12 @@ public partial class SecureFilesManager : UserControl
         }
     }
 
+    /// <summary>
+    /// Finds a node by name within a collection.
+    /// </summary>
+    /// <param name="collection">The collection to search within.</param>
+    /// <param name="name">The name of the node to find.</param>
+    /// <returns>The found node, or null if not found.</returns>
     private FileSystemNode? FindNode(ObservableCollection<FileSystemNode> collection, string name)
     {
         foreach (var node in collection)
@@ -139,6 +181,10 @@ public partial class SecureFilesManager : UserControl
         return null;
     }
 
+    /// <summary>
+    /// Performs an update operation on the encrypted archive.
+    /// </summary>
+    /// <param name="updateAction">An action defining the zip archive modifications.</param>
     private void SaveFileSystem(Action<ZipArchive> updateAction)
     {
         byte[] decryptedData;
@@ -173,6 +219,11 @@ public partial class SecureFilesManager : UserControl
         NavigateToNode(currentNode == null ? null : ReFindNode(currentNode.FullPath));
     }
 
+    /// <summary>
+    /// Refinds a node by its full path after a file system reload.
+    /// </summary>
+    /// <param name="fullPath">The full path of the node to find.</param>
+    /// <returns>The found node, or null if not found.</returns>
     private FileSystemNode? ReFindNode(string fullPath)
     {
         string[] parts = fullPath.Split('/', StringSplitOptions.RemoveEmptyEntries);
@@ -188,6 +239,9 @@ public partial class SecureFilesManager : UserControl
         return target;
     }
 
+    /// <summary>
+    /// Event handler for adding files to the secure vault.
+    /// </summary>
     private async void BtnAddFile_OnClick(object? sender, RoutedEventArgs e)
     {
         var topLevel = TopLevel.GetTopLevel(this);
@@ -195,7 +249,7 @@ public partial class SecureFilesManager : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Sélectionner un fichier à sécuriser",
+            Title = "Select a file to secure", // Translated from "Sélectionner un fichier à sécuriser"
             AllowMultiple = true
         });
 
@@ -221,6 +275,9 @@ public partial class SecureFilesManager : UserControl
         }
     }
 
+    /// <summary>
+    /// Event handler for deleting a selected file or folder from the secure vault.
+    /// </summary>
     private void BtnDelete_OnClick(object? sender, RoutedEventArgs e)
     {
         if (lbFiles.SelectedItem is not FileSystemNode selectedNode) return;
@@ -246,6 +303,9 @@ public partial class SecureFilesManager : UserControl
         });
     }
 
+    /// <summary>
+    /// Event handler for importing an entire folder into the secure vault.
+    /// </summary>
     private async void BtnImportFolder_OnClick(object? sender, RoutedEventArgs e)
     {
         var topLevel = TopLevel.GetTopLevel(this);
@@ -253,7 +313,7 @@ public partial class SecureFilesManager : UserControl
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Sélectionner un dossier à importer",
+            Title = "Select a folder to import", // Translated from "Sélectionner un dossier à importer"
             AllowMultiple = false
         });
 
@@ -306,6 +366,9 @@ public partial class SecureFilesManager : UserControl
         }
     }
 
+    /// <summary>
+    /// Event handler for extracting the selected file or folder out of the secure vault.
+    /// </summary>
     private async void BtnExtract_OnClick(object? sender, RoutedEventArgs e)
     {
         if (lbFiles.SelectedItem is not FileSystemNode selectedNode) return;
@@ -315,7 +378,7 @@ public partial class SecureFilesManager : UserControl
 
         var destFolders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Sélectionner un dossier de destination pour l'extraction",
+            Title = "Select a destination folder for extraction", // Translated from "Sélectionner un dossier de destination pour l'extraction"
             AllowMultiple = false
         });
 
@@ -363,9 +426,13 @@ public partial class SecureFilesManager : UserControl
         }
         catch (Exception ex)
         {
+            // Error handling could be implemented here
         }
     }
 
+    /// <summary>
+    /// Event handler for checking the integrity of the selected file.
+    /// </summary>
     private void BtnCheckIntegrity_OnClick(object? sender, RoutedEventArgs e)
     {
         FileSystemNode selectedNode = lbFiles.SelectedItem as FileSystemNode;
@@ -402,6 +469,7 @@ public partial class SecureFilesManager : UserControl
         }
         catch (Exception ex)
         {
+            // Error handling could be implemented here
         }
     }
 }

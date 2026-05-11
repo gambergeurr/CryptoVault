@@ -4,14 +4,24 @@ using Avalonia.Media;
 
 namespace CryptoVault;
 
+/// <summary>
+/// The main window of the application that hosts the different modules.
+/// </summary>
 public partial class MainWindow : Window
 {
     private byte[] key;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MainWindow"/> class.
+    /// </summary>
     public MainWindow()
     {
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Attempts to decrypt the vault using the password entered in the locked module.
+    /// </summary>
     private void TryDecrypt(object? sender, EventArgs e)
     {
         modules.LockedModule lockedModule = (sender as modules.LockedModule);
@@ -30,7 +40,7 @@ public partial class MainWindow : Window
         catch
         {
             lockedModule.tbxPassword.Text = string.Empty;
-            lockedModule.tbxPassword.Watermark = "Mot de passe incorrect";
+            lockedModule.tbxPassword.Watermark = "Incorrect password"; // Translated from "Mot de passe incorrect"
         }
     }
 }

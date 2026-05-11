@@ -10,17 +10,31 @@ using Avalonia.Markup.Xaml;
 
 namespace CryptoVault.modules;
 
+/// <summary>
+/// User control for managing encrypted API keys.
+/// </summary>
 public partial class ApiManager : UserControl
 {
     private byte[] _key;
     private string _filePath;
+
+    /// <summary>
+    /// Gets or sets the collection of API keys.
+    /// </summary>
     public ObservableCollection<ApiKey> ApiKeys { get; set; } = new ObservableCollection<ApiKey>();
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ApiManager"/> class.
+    /// </summary>
     public ApiManager()
     {
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ApiManager"/> class with a specific encryption key.
+    /// </summary>
+    /// <param name="key">The AES encryption key.</param>
     public ApiManager(byte[] key) : this()
     {
         _key = key;
@@ -35,6 +49,9 @@ public partial class ApiManager : UserControl
         lbKeys.ItemsSource = ApiKeys;
     }
 
+    /// <summary>
+    /// Loads and decrypts API keys from the storage file.
+    /// </summary>
     private void LoadKeys()
     {
         if (File.Exists(_filePath))
@@ -57,6 +74,9 @@ public partial class ApiManager : UserControl
         }
     }
 
+    /// <summary>
+    /// Encrypts and saves API keys to the storage file.
+    /// </summary>
     private void SaveKeys()
     {
         string json = JsonSerializer.Serialize(ApiKeys);
@@ -65,6 +85,9 @@ public partial class ApiManager : UserControl
         File.WriteAllBytes(_filePath, encryptedData);
     }
 
+    /// <summary>
+    /// Event handler for the selection change in the API keys listbox.
+    /// </summary>
     private void LbKeys_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (lbKeys.SelectedItem is ApiKey selectedKey)
@@ -79,20 +102,26 @@ public partial class ApiManager : UserControl
         }
     }
 
+    /// <summary>
+    /// Event handler for adding a new API key.
+    /// </summary>
     private void BtnAdd_OnClick(object? sender, RoutedEventArgs e)
     {
-        var newKey = new ApiKey { Name = "Nouvelle clé", Key = "", Desctiption = "", ExpirationDate = DateOnly.FromDateTime(DateTime.Now) };
+        var newKey = new ApiKey { Name = "New key", Key = "", Desctiption = "", ExpirationDate = DateOnly.FromDateTime(DateTime.Now) }; // Translated from "Nouvelle clé"
         ApiKeys.Add(newKey);
         lbKeys.SelectedItem = newKey;
         keyInfo.SetEditMode(true);
         SaveKeys();
     }
 
+    /// <summary>
+    /// Event handler triggered when a key's information is changed and validated.
+    /// </summary>
     private void KeyInfo_OnKeyChanged(object? sender, EventArgs e)
     {
         if (lbKeys.SelectedItem is ApiKey selectedKey)
         {
-            selectedKey.Name = keyInfo.Title ?? "Nouvelle clé";
+            selectedKey.Name = keyInfo.Title ?? "New key"; // Translated from "Nouvelle clé"
             selectedKey.Key = keyInfo.tbxKey.TbxText ?? "";
             selectedKey.Desctiption = keyInfo.tbxDescription.Text ?? "";
             
@@ -111,6 +140,9 @@ public partial class ApiManager : UserControl
         }
     }
 
+    /// <summary>
+    /// Event handler triggered when an API key is deleted.
+    /// </summary>
     private void KeyInfo_OnKeyDeleted(object? sender, EventArgs e)
     {
         if (lbKeys.SelectedItem is ApiKey selectedKey)

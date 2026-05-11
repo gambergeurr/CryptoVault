@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -19,11 +19,17 @@ using Image = Avalonia.Controls.Image;
 
 namespace CryptoVault.modules;
 
+/// <summary>
+/// User control for the Steganography module, allowing users to hide and extract files within images.
+/// </summary>
 public partial class Steganography : UserControl, INotifyPropertyChanged
 {
     private Image<Rgba32> CamoImage;
     private string FileName;
     
+    /// <summary>
+    /// Gets or sets the raw file data to be hidden or extracted.
+    /// </summary>
     public byte[] FileData
     {
         get => field;
@@ -37,25 +43,43 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Gets or sets the file content as a UTF-8 string. Used for data binding.
+    /// </summary>
     public string FileContent
     {
         get => FileData != null ? Encoding.UTF8.GetString(FileData) : string.Empty;
         set => FileData = value != null ? Encoding.UTF8.GetBytes(value) : Array.Empty<byte>();
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Steganography"/> class.
+    /// </summary>
     public Steganography()
     {
         InitializeComponent();
         DataContext = this;
     }
 
+    /// <summary>
+    /// Occurs when a property value changes.
+    /// </summary>
     public event PropertyChangedEventHandler? PropertyChanged;
 
+    /// <summary>
+    /// Raises the PropertyChanged event.
+    /// </summary>
+    /// <param name="propertyName">The name of the property that changed.</param>
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
+    /// <summary>
+    /// Serializes a file name and its binary data into a byte array.
+    /// </summary>
+    /// <param name="file">A tuple containing the file name and its byte data.</param>
+    /// <returns>A serialized byte array.</returns>
     private byte[] SerializeTuple((string name, byte[] data) file)
     {
         using (MemoryStream ms = new MemoryStream())
@@ -70,6 +94,11 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Deserializes a byte array back into a file name and its binary data.
+    /// </summary>
+    /// <param name="tuple">The serialized byte array.</param>
+    /// <returns>A tuple containing the file name and its byte data.</returns>
     private (string, byte[]) DeserializeTuple(byte[] tuple)
     {
         using (MemoryStream ms = new MemoryStream(tuple))
@@ -77,7 +106,7 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
             using (BinaryReader reader = new BinaryReader(ms, Encoding.UTF8))
             {
                 string name = reader.ReadString();
-                int dataLenght = reader.ReadInt32(); // how long is the data
+                int dataLenght = reader.ReadInt32(); // The length of the data
                 byte[] data = reader.ReadBytes(dataLenght);
                 
                 return (name, data);
@@ -85,11 +114,14 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Opens a file picker dialog for the user to select the carrier image.
+    /// </summary>
     private async void SelectImage(object? sender, RoutedEventArgs e)
     {
         FilePickerOpenOptions options = new FilePickerOpenOptions
         {
-            Title = "Choisir un image",
+            Title = "Choose an image", // Translated from "Choisir un image"
             AllowMultiple =  false,
             FileTypeFilter = new[] {FilePickerFileTypes.ImagePng}
         };
@@ -103,11 +135,14 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Opens a file picker dialog for the user to select a file to be hidden.
+    /// </summary>
     private async void LoadFile(object? sender, RoutedEventArgs e)
     {
         FilePickerOpenOptions options = new FilePickerOpenOptions
         {
-            Title = "Choisir un fichier",
+            Title = "Choose a file", // Translated from "Choisir un fichier"
             AllowMultiple =  false
         };
         
@@ -120,6 +155,9 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Opens a save file dialog to download the currently loaded or extracted file.
+    /// </summary>
     private async void DownloadFile(object? sender, RoutedEventArgs e)
     {
         if (FileData == null) return;
@@ -128,7 +166,7 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Enregistrer le fichier",
+            Title = "Save the file", // Translated from "Enregistrer le fichier"
             SuggestedFileName = FileName
         });
 
@@ -138,6 +176,9 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Executes the steganography hiding process using the provided password and image.
+    /// </summary>
     private async void HideData(object? sender, RoutedEventArgs e)
     {
         if (CamoImage == null)
@@ -158,7 +199,8 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
         {
             if (exception is ArgumentException)
             {
-                await MessageBoxManager.GetMessageBoxStandard("Erreur", "L'image séléctionnée n'est pas assez grande pour cacher le message").ShowWindowDialogAsync(TopLevel.GetTopLevel(this) as Window);
+                // Translated error message: "The selected image is not large enough to hide the message"
+                await MessageBoxManager.GetMessageBoxStandard("Error", "The selected image is not large enough to hide the message").ShowWindowDialogAsync(TopLevel.GetTopLevel(this) as Window);
             }
             return;
         }
@@ -167,7 +209,7 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Enregistrer l'image stéganographiée",
+            Title = "Save the steganographic image", // Translated from "Enregistrer l'image stéganographiée"
             DefaultExtension = "png",
             FileTypeChoices = new[] { FilePickerFileTypes.ImagePng },
             SuggestedFileName = "hidden_data.png"
@@ -179,6 +221,9 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Extracts hidden data from the loaded image using the provided password.
+    /// </summary>
     private async void UnHide(object? sender, RoutedEventArgs e)
     {
         if (CamoImage == null)
@@ -193,7 +238,8 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
         }
         catch (Exception exception)
         {
-            await MessageBoxManager.GetMessageBoxStandard("Erreur", "Erreur lors de l'extraction (probablement mot de passe incrorect)").ShowWindowDialogAsync(TopLevel.GetTopLevel(this) as Window);
+            // Translated error message: "Error during extraction (probably incorrect password)"
+            await MessageBoxManager.GetMessageBoxStandard("Error", "Error during extraction (probably incorrect password)").ShowWindowDialogAsync(TopLevel.GetTopLevel(this) as Window);
             return;
         }
         
