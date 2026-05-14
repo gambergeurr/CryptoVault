@@ -40,7 +40,7 @@ public partial class MainWindow : Window
         catch
         {
             lockedModule.tbxPassword.Text = string.Empty;
-            lockedModule.tbxPassword.Watermark = "Incorrect password"; // Translated from "Mot de passe incorrect"
+            lockedModule.tbxPassword.Watermark = "Mot de passe incorrect";
         }
     }
 }

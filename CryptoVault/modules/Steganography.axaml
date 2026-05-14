@@ -12,7 +12,15 @@
                 <Button Name="btnImageSelect" Click="SelectImage" Grid.Column="1" Content="Choisir un fichier" HorizontalAlignment="Center"/>
             </Grid>
             
-            <TextBox Name="tbxContent" Grid.Row="1" Margin="7" AcceptsReturn="True" Text="{Binding FileContent, Mode=TwoWay}"/>
+            <DockPanel Grid.Row="1" Margin="7">
+                <TextBlock DockPanel.Dock="Top" 
+                           Text="L'aperçu des fichiers peut génèrer des caractères illisibles." 
+                           Foreground="Red" 
+                           IsVisible="{Binding IsFileUploaded}" 
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,5"/>
+                <TextBox Name="tbxContent" AcceptsReturn="True" Text="{Binding FileContent, Mode=TwoWay}"/>
+            </DockPanel>
             
             <Grid Grid.Row="1" Grid.Column="1" RowDefinitions="*,*">
                 <StackPanel VerticalAlignment="Center">

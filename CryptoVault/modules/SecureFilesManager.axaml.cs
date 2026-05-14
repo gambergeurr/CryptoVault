@@ -249,7 +249,7 @@ public partial class SecureFilesManager : UserControl
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Select a file to secure", // Translated from "Sélectionner un fichier à sécuriser"
+            Title = "Sélectionner un fichier à sécuriser",
             AllowMultiple = true
         });
 
@@ -313,7 +313,7 @@ public partial class SecureFilesManager : UserControl
 
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Select a folder to import", // Translated from "Sélectionner un dossier à importer"
+            Title = "Sélectionner un dossier à importer",
             AllowMultiple = false
         });
 
@@ -378,7 +378,7 @@ public partial class SecureFilesManager : UserControl
 
         var destFolders = await topLevel.StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
-            Title = "Select a destination folder for extraction", // Translated from "Sélectionner un dossier de destination pour l'extraction"
+            Title = "Sélectionner un dossier de destination pour l'extraction",
             AllowMultiple = false
         });
 

@@ -128,17 +128,17 @@ public partial class KeyInfo : UserControl
         int daysRemaining = (expirationDate.ToDateTime(TimeOnly.MinValue) - DateTime.Now.Date).Days;
         if (daysRemaining > 0)
         {
-            txtRemainingDays.Text = $"({daysRemaining} days remaining)"; // Translated from "jours restants"
+            txtRemainingDays.Text = $"({daysRemaining} jours restants)";
             txtRemainingDays.Foreground = Avalonia.Media.Brushes.Gray;
         }
         else if (daysRemaining == 0)
         {
-            txtRemainingDays.Text = "(Expires today)"; // Translated from "Expire aujourd'hui"
+            txtRemainingDays.Text = "(Expire aujourd'hui)";
             txtRemainingDays.Foreground = Avalonia.Media.Brushes.Orange;
         }
         else
         {
-            txtRemainingDays.Text = $"(Expired for {-daysRemaining} days)"; // Translated from "Expiré depuis"
+            txtRemainingDays.Text = $"(Expiré depuis {-daysRemaining} jours)";
             txtRemainingDays.Foreground = Avalonia.Media.Brushes.Red;
         }
     }

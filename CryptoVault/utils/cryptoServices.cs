@@ -17,7 +17,7 @@ public static class CryptoService
     {
         // Throw an error if no password is entered
         if (string.IsNullOrEmpty(password))
-            throw new ArgumentException("The password cannot be empty."); // Translated from "Le mot de passe ne peut pas être vide."
+            throw new ArgumentException("The password cannot be empty.");
             
         byte[] StaticSalt = Encoding.UTF8.GetBytes("I5O=O2uf0SQ="); // Create a static salt for PBKDF2
         byte[] key = new byte[32]; // Initialize an empty 32-byte key for AES-256

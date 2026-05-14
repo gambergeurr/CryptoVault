@@ -107,7 +107,7 @@ public partial class ApiManager : UserControl
     /// </summary>
     private void BtnAdd_OnClick(object? sender, RoutedEventArgs e)
     {
-        var newKey = new ApiKey { Name = "New key", Key = "", Desctiption = "", ExpirationDate = DateOnly.FromDateTime(DateTime.Now) }; // Translated from "Nouvelle clé"
+        var newKey = new ApiKey { Name = "Nouvelle clé", Key = "", Desctiption = "", ExpirationDate = DateOnly.FromDateTime(DateTime.Now) };
         ApiKeys.Add(newKey);
         lbKeys.SelectedItem = newKey;
         keyInfo.SetEditMode(true);
@@ -121,7 +121,7 @@ public partial class ApiManager : UserControl
     {
         if (lbKeys.SelectedItem is ApiKey selectedKey)
         {
-            selectedKey.Name = keyInfo.Title ?? "New key"; // Translated from "Nouvelle clé"
+            selectedKey.Name = keyInfo.Title ?? "Nouvelle clé";
             selectedKey.Key = keyInfo.tbxKey.TbxText ?? "";
             selectedKey.Desctiption = keyInfo.tbxDescription.Text ?? "";
             

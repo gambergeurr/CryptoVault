@@ -36,7 +36,7 @@ public partial class IntegrityCheckWindow : Window
         this.fileName = fileName;
         this.vaultHash = vaultHash;
         
-        txtFileName.Text = $"File: {fileName}"; // Translated from "Fichier: "
+        txtFileName.Text = $"Fichier: {fileName}";
         txtVaultHash.Text = vaultHash;
     }
 
@@ -50,7 +50,7 @@ public partial class IntegrityCheckWindow : Window
 
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
-            Title = "Select local file for comparison", // Translated from "Sélectionner le fichier local pour comparaison"
+            Title = "Sélectionner le fichier local pour comparaison",
             AllowMultiple = false
         });
 
@@ -67,12 +67,12 @@ public partial class IntegrityCheckWindow : Window
 
                 if (localHash == vaultHash)
                 {
-                    txtStatus.Text = "✅ The files are identical."; // Translated from "✅ Les fichiers sont identiques."
+                    txtStatus.Text = "✅ Les fichiers sont identiques.";
                     txtStatus.Foreground = Brushes.Green;
                 }
                 else
                 {
-                    txtStatus.Text = "❌ The file has been modified."; // Translated from "❌ Le fichier a été modifié."
+                    txtStatus.Text = "❌ Le fichier a été modifié.";
                     txtStatus.Foreground = Brushes.Red;
                 }
             }

@@ -29,66 +29,66 @@ public partial class PasswordAnalyzer : UserControl
 
         if (PasswordChecker.CheckCaps(password))
         {
-            tbkCaps.Text = "☑ Uppercase"; // Translated from "☑ Majuscules"
+            tbkCaps.Text = "☑ Majuscules";
             score++;
         }
         else
         {
-            tbkCaps.Text  = "☒ Uppercase"; // Translated from "☒ Majuscules"
+            tbkCaps.Text  = "☒ Majuscules";
         }
         
         if (PasswordChecker.CheckLower(password))
         {
-            tbkLower.Text = "☑ Lowercase"; // Translated from "☑ Minuscules"
+            tbkLower.Text = "☑ Minuscules";
             score++;
         }
         else
         {
-            tbkLower.Text  = "☒ Lowercase"; // Translated from "☒ Minuscules"
+            tbkLower.Text  = "☒ Minuscules";
         }
         
         if (PasswordChecker.CheckLenght(password))
         {
-            tbkLenght.Text = "☑ Length (10 char.)"; // Translated from "☑ Longueur (10 char.)"
+            tbkLenght.Text = "☑ Longueur (10 char.)";
             score++;
         }
         else
         {
-            tbkLenght.Text  = "☒ Length (10 char.)"; // Translated from "☒ Longueur (10 char.)"
+            tbkLenght.Text  = "☒ Longueur (10 char.)";
         }
         
         if (PasswordChecker.CheckNumber(password))
         {
-            tbkNumbers.Text = "☑ Numbers"; // Translated from "☑ Chiffres"
+            tbkNumbers.Text = "☑ Chiffres";
             score++;
         }
         else
         {
-            tbkNumbers.Text  = "☒ Numbers"; // Translated from "☒ Chiffres"
+            tbkNumbers.Text  = "☒ Chiffres";
         }
         
         if (PasswordChecker.CheckSpecial(password))
         {
-            tbkSpecialChars.Text = "☑ Symbols"; // Translated from "☑ Symboles"
+            tbkSpecialChars.Text = "☑ Symboles";
             score++;
         }
         else
         {
-            tbkSpecialChars.Text  = "☒ Symbols"; // Translated from "☒ Symboles"
+            tbkSpecialChars.Text  = "☒ Symboles";
         }
 
         switch (score)
         {
             case <= 2:
-                tbkStrenght.Text = "Weak"; // Translated from "Faible"
+                tbkStrenght.Text = "Faible";
                 tbkStrenght.Foreground = Brushes.Red;
                 break;
             case <= 4:
-                tbkStrenght.Text = "Medium"; // Translated from "Moyen"
+                tbkStrenght.Text = "Moyen";
                 tbkStrenght.Foreground = Brushes.Orange;
                 break;
             case 5:
-                tbkStrenght.Text = "Strong"; // Translated from "Fort"
+                tbkStrenght.Text = "Fort";
                 tbkStrenght.Foreground = Brushes.Green;
                 break;
         }

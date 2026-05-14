@@ -30,7 +30,7 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
     /// <summary>
     /// Gets or sets the raw file data to be hidden or extracted.
     /// </summary>
-    public byte[] FileData
+    public byte[]? FileData
     {
         get => field;
         set
@@ -39,9 +39,15 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
             {
                 field = value;
                 OnPropertyChanged(nameof(FileContent));
+                OnPropertyChanged(nameof(IsFileUploaded));
             }
         }
     }
+
+    /// <summary>
+    /// Gets a value indicating whether a file has been uploaded or extracted.
+    /// </summary>
+    public bool IsFileUploaded => FileData != null;
 
     /// <summary>
     /// Gets or sets the file content as a UTF-8 string. Used for data binding.
@@ -121,7 +127,7 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
     {
         FilePickerOpenOptions options = new FilePickerOpenOptions
         {
-            Title = "Choose an image", // Translated from "Choisir un image"
+            Title = "Choisir un image",
             AllowMultiple =  false,
             FileTypeFilter = new[] {FilePickerFileTypes.ImagePng}
         };
@@ -142,7 +148,7 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
     {
         FilePickerOpenOptions options = new FilePickerOpenOptions
         {
-            Title = "Choose a file", // Translated from "Choisir un fichier"
+            Title = "Choisir un fichier",
             AllowMultiple =  false
         };
         
@@ -166,7 +172,7 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save the file", // Translated from "Enregistrer le fichier"
+            Title = "Enregistrer le fichier",
             SuggestedFileName = FileName
         });
 
@@ -199,8 +205,7 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
         {
             if (exception is ArgumentException)
             {
-                // Translated error message: "The selected image is not large enough to hide the message"
-                await MessageBoxManager.GetMessageBoxStandard("Error", "The selected image is not large enough to hide the message").ShowWindowDialogAsync(TopLevel.GetTopLevel(this) as Window);
+                await MessageBoxManager.GetMessageBoxStandard("Erreur", "L'image sélectionnée n'est pas assez grande pour cacher le message").ShowWindowDialogAsync(TopLevel.GetTopLevel(this) as Window);
             }
             return;
         }
@@ -209,7 +214,7 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
 
         var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
         {
-            Title = "Save the steganographic image", // Translated from "Enregistrer l'image stéganographiée"
+            Title = "Enregistrer l'image stéganographiée",
             DefaultExtension = "png",
             FileTypeChoices = new[] { FilePickerFileTypes.ImagePng },
             SuggestedFileName = "hidden_data.png"
@@ -238,8 +243,7 @@ public partial class Steganography : UserControl, INotifyPropertyChanged
         }
         catch (Exception exception)
         {
-            // Translated error message: "Error during extraction (probably incorrect password)"
-            await MessageBoxManager.GetMessageBoxStandard("Error", "Error during extraction (probably incorrect password)").ShowWindowDialogAsync(TopLevel.GetTopLevel(this) as Window);
+            await MessageBoxManager.GetMessageBoxStandard("Erreur", "Erreur lors de l'extraction (probablement mot de passe incorrect)").ShowWindowDialogAsync(TopLevel.GetTopLevel(this) as Window);
             return;
         }
         
