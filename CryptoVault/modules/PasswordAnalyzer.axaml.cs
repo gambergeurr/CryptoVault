@@ -1,7 +1,8 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
+using Avalonia.Interactivity;
+using PasswordGenerator;
 
 namespace CryptoVault.modules;
 
@@ -17,6 +18,21 @@ public partial class PasswordAnalyzer : UserControl
     {
         InitializeComponent();
         tbxPasswordAnalyzer.Text = "";
+    }
+
+    /// <summary>
+    /// Generates a strong random password and populates the text box.
+    /// </summary>
+    private void GenerateStrongPassword(object? sender, RoutedEventArgs e)
+    {
+        string password = new Password(16)
+            .IncludeLowercase()
+            .IncludeUppercase()
+            .IncludeNumeric()
+            .IncludeSpecial()
+            .Next();
+            
+        tbxPasswordAnalyzer.Text = password;
     }
     
     /// <summary>
